@@ -1,0 +1,1364 @@
+Terminals unused in grammar
+
+   AS
+
+
+Grammar
+
+    0 $accept: S $end
+
+    1 S: ST1 ';'
+
+    2 ST1: DELETE delete_options attributeList FROM tableList ST2 ST7
+    3    | DELETE delete_options FROM tableList ST2 ST7
+    4    | DELETE delete_options FROM attributeList USING tableList ST2 ST7
+
+    5 ST2: WHERE CONDITION ST5
+    6    | ST5
+
+    7 ST3: GROUP attributeList ST4
+    8    | ST5
+
+    9 ST4: HAVING COUNT '(' F ')' ST5
+   10    | HAVING COUNT '(' F ')' E1 ST5
+   11    | ST5
+
+   12 ST5: ORDER attributeList ST6
+   13    | /* empty */
+
+   14 ST6: DESC
+   15    | ASC
+   16    | /* empty */
+
+   17 ST7: LIMIT NUM
+   18    | LIMIT NUM ',' NUM
+   19    | /* empty */
+
+   20 ST8: SELECT attributeList FROM tableList ST9
+   21    | SELECT DISTINCT attributeList FROM tableList ST9
+
+   22 ST9: WHERE CONDITION ST3
+   23    | ST3
+
+   24 delete_options: delete_options LOW_PRIORITY
+   25               | delete_options QUICK
+   26               | delete_options IGNORE
+   27               | /* empty */
+
+   28 attributeList: ID ',' attributeList
+   29              | '*'
+   30              | ID
+
+   31 tableList: ID ',' tableList
+   32          | ID
+
+   33 CONDITION: CONDITION OR CONDITION
+   34          | CONDITION AND CONDITION
+   35          | E
+   36          | ID BETWEEN F AND F
+   37          | ID IN '(' ST8 ')'
+   38          | ID IN '(' F ',' F ')'
+
+   39 E: F '=' F
+   40  | F '<' F
+   41  | F '>' F
+   42  | F LE F
+   43  | F GE F
+   44  | F EQ F
+   45  | F NE F
+   46  | F OR F
+   47  | F AND F
+
+   48 E1: '=' F
+   49   | '<' F
+   50   | '>' F
+   51   | LE F
+   52   | GE F
+   53   | EQ F
+   54   | NE F
+   55   | OR F
+   56   | AND F
+
+   57 F: ID
+   58  | NUM
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 9 10 37 38
+')' (41) 9 10 37 38
+'*' (42) 29
+',' (44) 18 28 31 38
+';' (59) 1
+'<' (60) 40 49
+'=' (61) 39 48
+'>' (62) 41 50
+error (256)
+ID (258) 28 30 31 32 36 37 38 57
+NUM (259) 17 18 58
+DELETE (260) 2 3 4
+FROM (261) 2 3 4 20 21
+WHERE (262) 5 22
+LIMIT (263) 17 18
+LE (264) 42 51
+GE (265) 43 52
+EQ (266) 44 53
+NE (267) 45 54
+OR (268) 33 46 55
+AND (269) 34 36 47 56
+GROUP (270) 7
+USING (271) 4
+HAVING (272) 9 10
+ORDER (273) 12
+ASC (274) 15
+DESC (275) 14
+IN (276) 37 38
+AS (277)
+SELECT (278) 20 21
+DISTINCT (279) 21
+BETWEEN (280) 36
+LOW_PRIORITY (281) 24
+QUICK (282) 25
+IGNORE (283) 26
+COUNT (284) 9 10
+
+
+Nonterminals, with rules where they appear
+
+$accept (38)
+    on left: 0
+S (39)
+    on left: 1, on right: 0
+ST1 (40)
+    on left: 2 3 4, on right: 1
+ST2 (41)
+    on left: 5 6, on right: 2 3 4
+ST3 (42)
+    on left: 7 8, on right: 22 23
+ST4 (43)
+    on left: 9 10 11, on right: 7
+ST5 (44)
+    on left: 12 13, on right: 5 6 8 9 10 11
+ST6 (45)
+    on left: 14 15 16, on right: 12
+ST7 (46)
+    on left: 17 18 19, on right: 2 3 4
+ST8 (47)
+    on left: 20 21, on right: 37
+ST9 (48)
+    on left: 22 23, on right: 20 21
+delete_options (49)
+    on left: 24 25 26 27, on right: 2 3 4 24 25 26
+attributeList (50)
+    on left: 28 29 30, on right: 2 4 7 12 20 21 28
+tableList (51)
+    on left: 31 32, on right: 2 3 4 20 21 31
+CONDITION (52)
+    on left: 33 34 35 36 37 38, on right: 5 22 33 34
+E (53)
+    on left: 39 40 41 42 43 44 45 46 47, on right: 35
+E1 (54)
+    on left: 48 49 50 51 52 53 54 55 56, on right: 10
+F (55)
+    on left: 57 58, on right: 9 10 36 38 39 40 41 42 43 44 45 46 47
+    48 49 50 51 52 53 54 55 56
+
+
+state 0
+
+    0 $accept: . S $end
+
+    DELETE  shift, and go to state 1
+
+    S    go to state 2
+    ST1  go to state 3
+
+
+state 1
+
+    2 ST1: DELETE . delete_options attributeList FROM tableList ST2 ST7
+    3    | DELETE . delete_options FROM tableList ST2 ST7
+    4    | DELETE . delete_options FROM attributeList USING tableList ST2 ST7
+
+    $default  reduce using rule 27 (delete_options)
+
+    delete_options  go to state 4
+
+
+state 2
+
+    0 $accept: S . $end
+
+    $end  shift, and go to state 5
+
+
+state 3
+
+    1 S: ST1 . ';'
+
+    ';'  shift, and go to state 6
+
+
+state 4
+
+    2 ST1: DELETE delete_options . attributeList FROM tableList ST2 ST7
+    3    | DELETE delete_options . FROM tableList ST2 ST7
+    4    | DELETE delete_options . FROM attributeList USING tableList ST2 ST7
+   24 delete_options: delete_options . LOW_PRIORITY
+   25               | delete_options . QUICK
+   26               | delete_options . IGNORE
+
+    ID            shift, and go to state 7
+    FROM          shift, and go to state 8
+    LOW_PRIORITY  shift, and go to state 9
+    QUICK         shift, and go to state 10
+    IGNORE        shift, and go to state 11
+    '*'           shift, and go to state 12
+
+    attributeList  go to state 13
+
+
+state 5
+
+    0 $accept: S $end .
+
+    $default  accept
+
+
+state 6
+
+    1 S: ST1 ';' .
+
+    $default  reduce using rule 1 (S)
+
+
+state 7
+
+   28 attributeList: ID . ',' attributeList
+   30              | ID .
+
+    ','  shift, and go to state 14
+
+    $default  reduce using rule 30 (attributeList)
+
+
+state 8
+
+    3 ST1: DELETE delete_options FROM . tableList ST2 ST7
+    4    | DELETE delete_options FROM . attributeList USING tableList ST2 ST7
+
+    ID   shift, and go to state 15
+    '*'  shift, and go to state 12
+
+    attributeList  go to state 16
+    tableList      go to state 17
+
+
+state 9
+
+   24 delete_options: delete_options LOW_PRIORITY .
+
+    $default  reduce using rule 24 (delete_options)
+
+
+state 10
+
+   25 delete_options: delete_options QUICK .
+
+    $default  reduce using rule 25 (delete_options)
+
+
+state 11
+
+   26 delete_options: delete_options IGNORE .
+
+    $default  reduce using rule 26 (delete_options)
+
+
+state 12
+
+   29 attributeList: '*' .
+
+    $default  reduce using rule 29 (attributeList)
+
+
+state 13
+
+    2 ST1: DELETE delete_options attributeList . FROM tableList ST2 ST7
+
+    FROM  shift, and go to state 18
+
+
+state 14
+
+   28 attributeList: ID ',' . attributeList
+
+    ID   shift, and go to state 7
+    '*'  shift, and go to state 12
+
+    attributeList  go to state 19
+
+
+state 15
+
+   28 attributeList: ID . ',' attributeList
+   30              | ID .
+   31 tableList: ID . ',' tableList
+   32          | ID .
+
+    ','  shift, and go to state 20
+
+    USING     reduce using rule 30 (attributeList)
+    $default  reduce using rule 32 (tableList)
+
+
+state 16
+
+    4 ST1: DELETE delete_options FROM attributeList . USING tableList ST2 ST7
+
+    USING  shift, and go to state 21
+
+
+state 17
+
+    3 ST1: DELETE delete_options FROM tableList . ST2 ST7
+
+    WHERE  shift, and go to state 22
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST2  go to state 24
+    ST5  go to state 25
+
+
+state 18
+
+    2 ST1: DELETE delete_options attributeList FROM . tableList ST2 ST7
+
+    ID  shift, and go to state 26
+
+    tableList  go to state 27
+
+
+state 19
+
+   28 attributeList: ID ',' attributeList .
+
+    $default  reduce using rule 28 (attributeList)
+
+
+state 20
+
+   28 attributeList: ID ',' . attributeList
+   31 tableList: ID ',' . tableList
+
+    ID   shift, and go to state 15
+    '*'  shift, and go to state 12
+
+    attributeList  go to state 19
+    tableList      go to state 28
+
+
+state 21
+
+    4 ST1: DELETE delete_options FROM attributeList USING . tableList ST2 ST7
+
+    ID  shift, and go to state 26
+
+    tableList  go to state 29
+
+
+state 22
+
+    5 ST2: WHERE . CONDITION ST5
+
+    ID   shift, and go to state 30
+    NUM  shift, and go to state 31
+
+    CONDITION  go to state 32
+    E          go to state 33
+    F          go to state 34
+
+
+state 23
+
+   12 ST5: ORDER . attributeList ST6
+
+    ID   shift, and go to state 7
+    '*'  shift, and go to state 12
+
+    attributeList  go to state 35
+
+
+state 24
+
+    3 ST1: DELETE delete_options FROM tableList ST2 . ST7
+
+    LIMIT  shift, and go to state 36
+
+    $default  reduce using rule 19 (ST7)
+
+    ST7  go to state 37
+
+
+state 25
+
+    6 ST2: ST5 .
+
+    $default  reduce using rule 6 (ST2)
+
+
+state 26
+
+   31 tableList: ID . ',' tableList
+   32          | ID .
+
+    ','  shift, and go to state 38
+
+    $default  reduce using rule 32 (tableList)
+
+
+state 27
+
+    2 ST1: DELETE delete_options attributeList FROM tableList . ST2 ST7
+
+    WHERE  shift, and go to state 22
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST2  go to state 39
+    ST5  go to state 25
+
+
+state 28
+
+   31 tableList: ID ',' tableList .
+
+    $default  reduce using rule 31 (tableList)
+
+
+state 29
+
+    4 ST1: DELETE delete_options FROM attributeList USING tableList . ST2 ST7
+
+    WHERE  shift, and go to state 22
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST2  go to state 40
+    ST5  go to state 25
+
+
+state 30
+
+   36 CONDITION: ID . BETWEEN F AND F
+   37          | ID . IN '(' ST8 ')'
+   38          | ID . IN '(' F ',' F ')'
+   57 F: ID .
+
+    IN       shift, and go to state 41
+    BETWEEN  shift, and go to state 42
+
+    $default  reduce using rule 57 (F)
+
+
+state 31
+
+   58 F: NUM .
+
+    $default  reduce using rule 58 (F)
+
+
+state 32
+
+    5 ST2: WHERE CONDITION . ST5
+   33 CONDITION: CONDITION . OR CONDITION
+   34          | CONDITION . AND CONDITION
+
+    OR     shift, and go to state 43
+    AND    shift, and go to state 44
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST5  go to state 45
+
+
+state 33
+
+   35 CONDITION: E .
+
+    $default  reduce using rule 35 (CONDITION)
+
+
+state 34
+
+   39 E: F . '=' F
+   40  | F . '<' F
+   41  | F . '>' F
+   42  | F . LE F
+   43  | F . GE F
+   44  | F . EQ F
+   45  | F . NE F
+   46  | F . OR F
+   47  | F . AND F
+
+    LE   shift, and go to state 46
+    GE   shift, and go to state 47
+    EQ   shift, and go to state 48
+    NE   shift, and go to state 49
+    OR   shift, and go to state 50
+    AND  shift, and go to state 51
+    '='  shift, and go to state 52
+    '<'  shift, and go to state 53
+    '>'  shift, and go to state 54
+
+
+state 35
+
+   12 ST5: ORDER attributeList . ST6
+
+    ASC   shift, and go to state 55
+    DESC  shift, and go to state 56
+
+    $default  reduce using rule 16 (ST6)
+
+    ST6  go to state 57
+
+
+state 36
+
+   17 ST7: LIMIT . NUM
+   18    | LIMIT . NUM ',' NUM
+
+    NUM  shift, and go to state 58
+
+
+state 37
+
+    3 ST1: DELETE delete_options FROM tableList ST2 ST7 .
+
+    $default  reduce using rule 3 (ST1)
+
+
+state 38
+
+   31 tableList: ID ',' . tableList
+
+    ID  shift, and go to state 26
+
+    tableList  go to state 28
+
+
+state 39
+
+    2 ST1: DELETE delete_options attributeList FROM tableList ST2 . ST7
+
+    LIMIT  shift, and go to state 36
+
+    $default  reduce using rule 19 (ST7)
+
+    ST7  go to state 59
+
+
+state 40
+
+    4 ST1: DELETE delete_options FROM attributeList USING tableList ST2 . ST7
+
+    LIMIT  shift, and go to state 36
+
+    $default  reduce using rule 19 (ST7)
+
+    ST7  go to state 60
+
+
+state 41
+
+   37 CONDITION: ID IN . '(' ST8 ')'
+   38          | ID IN . '(' F ',' F ')'
+
+    '('  shift, and go to state 61
+
+
+state 42
+
+   36 CONDITION: ID BETWEEN . F AND F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 63
+
+
+state 43
+
+   33 CONDITION: CONDITION OR . CONDITION
+
+    ID   shift, and go to state 30
+    NUM  shift, and go to state 31
+
+    CONDITION  go to state 64
+    E          go to state 33
+    F          go to state 34
+
+
+state 44
+
+   34 CONDITION: CONDITION AND . CONDITION
+
+    ID   shift, and go to state 30
+    NUM  shift, and go to state 31
+
+    CONDITION  go to state 65
+    E          go to state 33
+    F          go to state 34
+
+
+state 45
+
+    5 ST2: WHERE CONDITION ST5 .
+
+    $default  reduce using rule 5 (ST2)
+
+
+state 46
+
+   42 E: F LE . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 66
+
+
+state 47
+
+   43 E: F GE . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 67
+
+
+state 48
+
+   44 E: F EQ . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 68
+
+
+state 49
+
+   45 E: F NE . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 69
+
+
+state 50
+
+   46 E: F OR . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 70
+
+
+state 51
+
+   47 E: F AND . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 71
+
+
+state 52
+
+   39 E: F '=' . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 72
+
+
+state 53
+
+   40 E: F '<' . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 73
+
+
+state 54
+
+   41 E: F '>' . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 74
+
+
+state 55
+
+   15 ST6: ASC .
+
+    $default  reduce using rule 15 (ST6)
+
+
+state 56
+
+   14 ST6: DESC .
+
+    $default  reduce using rule 14 (ST6)
+
+
+state 57
+
+   12 ST5: ORDER attributeList ST6 .
+
+    $default  reduce using rule 12 (ST5)
+
+
+state 58
+
+   17 ST7: LIMIT NUM .
+   18    | LIMIT NUM . ',' NUM
+
+    ','  shift, and go to state 75
+
+    $default  reduce using rule 17 (ST7)
+
+
+state 59
+
+    2 ST1: DELETE delete_options attributeList FROM tableList ST2 ST7 .
+
+    $default  reduce using rule 2 (ST1)
+
+
+state 60
+
+    4 ST1: DELETE delete_options FROM attributeList USING tableList ST2 ST7 .
+
+    $default  reduce using rule 4 (ST1)
+
+
+state 61
+
+   37 CONDITION: ID IN '(' . ST8 ')'
+   38          | ID IN '(' . F ',' F ')'
+
+    ID      shift, and go to state 62
+    NUM     shift, and go to state 31
+    SELECT  shift, and go to state 76
+
+    ST8  go to state 77
+    F    go to state 78
+
+
+state 62
+
+   57 F: ID .
+
+    $default  reduce using rule 57 (F)
+
+
+state 63
+
+   36 CONDITION: ID BETWEEN F . AND F
+
+    AND  shift, and go to state 79
+
+
+state 64
+
+   33 CONDITION: CONDITION . OR CONDITION
+   33          | CONDITION OR CONDITION .
+   34          | CONDITION . AND CONDITION
+
+    $default  reduce using rule 33 (CONDITION)
+
+
+state 65
+
+   33 CONDITION: CONDITION . OR CONDITION
+   34          | CONDITION . AND CONDITION
+   34          | CONDITION AND CONDITION .
+
+    $default  reduce using rule 34 (CONDITION)
+
+
+state 66
+
+   42 E: F LE F .
+
+    $default  reduce using rule 42 (E)
+
+
+state 67
+
+   43 E: F GE F .
+
+    $default  reduce using rule 43 (E)
+
+
+state 68
+
+   44 E: F EQ F .
+
+    $default  reduce using rule 44 (E)
+
+
+state 69
+
+   45 E: F NE F .
+
+    $default  reduce using rule 45 (E)
+
+
+state 70
+
+   46 E: F OR F .
+
+    $default  reduce using rule 46 (E)
+
+
+state 71
+
+   47 E: F AND F .
+
+    $default  reduce using rule 47 (E)
+
+
+state 72
+
+   39 E: F '=' F .
+
+    $default  reduce using rule 39 (E)
+
+
+state 73
+
+   40 E: F '<' F .
+
+    $default  reduce using rule 40 (E)
+
+
+state 74
+
+   41 E: F '>' F .
+
+    $default  reduce using rule 41 (E)
+
+
+state 75
+
+   18 ST7: LIMIT NUM ',' . NUM
+
+    NUM  shift, and go to state 80
+
+
+state 76
+
+   20 ST8: SELECT . attributeList FROM tableList ST9
+   21    | SELECT . DISTINCT attributeList FROM tableList ST9
+
+    ID        shift, and go to state 7
+    DISTINCT  shift, and go to state 81
+    '*'       shift, and go to state 12
+
+    attributeList  go to state 82
+
+
+state 77
+
+   37 CONDITION: ID IN '(' ST8 . ')'
+
+    ')'  shift, and go to state 83
+
+
+state 78
+
+   38 CONDITION: ID IN '(' F . ',' F ')'
+
+    ','  shift, and go to state 84
+
+
+state 79
+
+   36 CONDITION: ID BETWEEN F AND . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 85
+
+
+state 80
+
+   18 ST7: LIMIT NUM ',' NUM .
+
+    $default  reduce using rule 18 (ST7)
+
+
+state 81
+
+   21 ST8: SELECT DISTINCT . attributeList FROM tableList ST9
+
+    ID   shift, and go to state 7
+    '*'  shift, and go to state 12
+
+    attributeList  go to state 86
+
+
+state 82
+
+   20 ST8: SELECT attributeList . FROM tableList ST9
+
+    FROM  shift, and go to state 87
+
+
+state 83
+
+   37 CONDITION: ID IN '(' ST8 ')' .
+
+    $default  reduce using rule 37 (CONDITION)
+
+
+state 84
+
+   38 CONDITION: ID IN '(' F ',' . F ')'
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 88
+
+
+state 85
+
+   36 CONDITION: ID BETWEEN F AND F .
+
+    $default  reduce using rule 36 (CONDITION)
+
+
+state 86
+
+   21 ST8: SELECT DISTINCT attributeList . FROM tableList ST9
+
+    FROM  shift, and go to state 89
+
+
+state 87
+
+   20 ST8: SELECT attributeList FROM . tableList ST9
+
+    ID  shift, and go to state 26
+
+    tableList  go to state 90
+
+
+state 88
+
+   38 CONDITION: ID IN '(' F ',' F . ')'
+
+    ')'  shift, and go to state 91
+
+
+state 89
+
+   21 ST8: SELECT DISTINCT attributeList FROM . tableList ST9
+
+    ID  shift, and go to state 26
+
+    tableList  go to state 92
+
+
+state 90
+
+   20 ST8: SELECT attributeList FROM tableList . ST9
+
+    WHERE  shift, and go to state 93
+    GROUP  shift, and go to state 94
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST3  go to state 95
+    ST5  go to state 96
+    ST9  go to state 97
+
+
+state 91
+
+   38 CONDITION: ID IN '(' F ',' F ')' .
+
+    $default  reduce using rule 38 (CONDITION)
+
+
+state 92
+
+   21 ST8: SELECT DISTINCT attributeList FROM tableList . ST9
+
+    WHERE  shift, and go to state 93
+    GROUP  shift, and go to state 94
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST3  go to state 95
+    ST5  go to state 96
+    ST9  go to state 98
+
+
+state 93
+
+   22 ST9: WHERE . CONDITION ST3
+
+    ID   shift, and go to state 30
+    NUM  shift, and go to state 31
+
+    CONDITION  go to state 99
+    E          go to state 33
+    F          go to state 34
+
+
+state 94
+
+    7 ST3: GROUP . attributeList ST4
+
+    ID   shift, and go to state 7
+    '*'  shift, and go to state 12
+
+    attributeList  go to state 100
+
+
+state 95
+
+   23 ST9: ST3 .
+
+    $default  reduce using rule 23 (ST9)
+
+
+state 96
+
+    8 ST3: ST5 .
+
+    $default  reduce using rule 8 (ST3)
+
+
+state 97
+
+   20 ST8: SELECT attributeList FROM tableList ST9 .
+
+    $default  reduce using rule 20 (ST8)
+
+
+state 98
+
+   21 ST8: SELECT DISTINCT attributeList FROM tableList ST9 .
+
+    $default  reduce using rule 21 (ST8)
+
+
+state 99
+
+   22 ST9: WHERE CONDITION . ST3
+   33 CONDITION: CONDITION . OR CONDITION
+   34          | CONDITION . AND CONDITION
+
+    OR     shift, and go to state 43
+    AND    shift, and go to state 44
+    GROUP  shift, and go to state 94
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST3  go to state 101
+    ST5  go to state 96
+
+
+state 100
+
+    7 ST3: GROUP attributeList . ST4
+
+    HAVING  shift, and go to state 102
+    ORDER   shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST4  go to state 103
+    ST5  go to state 104
+
+
+state 101
+
+   22 ST9: WHERE CONDITION ST3 .
+
+    $default  reduce using rule 22 (ST9)
+
+
+state 102
+
+    9 ST4: HAVING . COUNT '(' F ')' ST5
+   10    | HAVING . COUNT '(' F ')' E1 ST5
+
+    COUNT  shift, and go to state 105
+
+
+state 103
+
+    7 ST3: GROUP attributeList ST4 .
+
+    $default  reduce using rule 7 (ST3)
+
+
+state 104
+
+   11 ST4: ST5 .
+
+    $default  reduce using rule 11 (ST4)
+
+
+state 105
+
+    9 ST4: HAVING COUNT . '(' F ')' ST5
+   10    | HAVING COUNT . '(' F ')' E1 ST5
+
+    '('  shift, and go to state 106
+
+
+state 106
+
+    9 ST4: HAVING COUNT '(' . F ')' ST5
+   10    | HAVING COUNT '(' . F ')' E1 ST5
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 107
+
+
+state 107
+
+    9 ST4: HAVING COUNT '(' F . ')' ST5
+   10    | HAVING COUNT '(' F . ')' E1 ST5
+
+    ')'  shift, and go to state 108
+
+
+state 108
+
+    9 ST4: HAVING COUNT '(' F ')' . ST5
+   10    | HAVING COUNT '(' F ')' . E1 ST5
+
+    LE     shift, and go to state 109
+    GE     shift, and go to state 110
+    EQ     shift, and go to state 111
+    NE     shift, and go to state 112
+    OR     shift, and go to state 113
+    AND    shift, and go to state 114
+    ORDER  shift, and go to state 23
+    '='    shift, and go to state 115
+    '<'    shift, and go to state 116
+    '>'    shift, and go to state 117
+
+    $default  reduce using rule 13 (ST5)
+
+    ST5  go to state 118
+    E1   go to state 119
+
+
+state 109
+
+   51 E1: LE . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 120
+
+
+state 110
+
+   52 E1: GE . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 121
+
+
+state 111
+
+   53 E1: EQ . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 122
+
+
+state 112
+
+   54 E1: NE . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 123
+
+
+state 113
+
+   55 E1: OR . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 124
+
+
+state 114
+
+   56 E1: AND . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 125
+
+
+state 115
+
+   48 E1: '=' . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 126
+
+
+state 116
+
+   49 E1: '<' . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 127
+
+
+state 117
+
+   50 E1: '>' . F
+
+    ID   shift, and go to state 62
+    NUM  shift, and go to state 31
+
+    F  go to state 128
+
+
+state 118
+
+    9 ST4: HAVING COUNT '(' F ')' ST5 .
+
+    $default  reduce using rule 9 (ST4)
+
+
+state 119
+
+   10 ST4: HAVING COUNT '(' F ')' E1 . ST5
+
+    ORDER  shift, and go to state 23
+
+    $default  reduce using rule 13 (ST5)
+
+    ST5  go to state 129
+
+
+state 120
+
+   51 E1: LE F .
+
+    $default  reduce using rule 51 (E1)
+
+
+state 121
+
+   52 E1: GE F .
+
+    $default  reduce using rule 52 (E1)
+
+
+state 122
+
+   53 E1: EQ F .
+
+    $default  reduce using rule 53 (E1)
+
+
+state 123
+
+   54 E1: NE F .
+
+    $default  reduce using rule 54 (E1)
+
+
+state 124
+
+   55 E1: OR F .
+
+    $default  reduce using rule 55 (E1)
+
+
+state 125
+
+   56 E1: AND F .
+
+    $default  reduce using rule 56 (E1)
+
+
+state 126
+
+   48 E1: '=' F .
+
+    $default  reduce using rule 48 (E1)
+
+
+state 127
+
+   49 E1: '<' F .
+
+    $default  reduce using rule 49 (E1)
+
+
+state 128
+
+   50 E1: '>' F .
+
+    $default  reduce using rule 50 (E1)
+
+
+state 129
+
+   10 ST4: HAVING COUNT '(' F ')' E1 ST5 .
+
+    $default  reduce using rule 10 (ST4)
